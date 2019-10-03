@@ -43,13 +43,16 @@ namespace ContactListExercise.Controllers
         public IActionResult GetItem([FromQuery] String nameFilter)
         {
             //check for null or empty nameFilter
+            // Prefer string.IsNullOrEmpty in such cases
             if(nameFilter != null && nameFilter.Length > 0)
             {
                 //create an empty list for potential objects
                 List<Person> peopleToReturn = new List<Person>();
+                // Prefer foreach in such cases
                 for (int i = 0; i < items.Count; i++)
                 {
                     //compare the firstname and the lastname with the nameFilter (obviously the name should start with the nameFilter so i chose to use the method 'StartsWith()')
+                    // Specification: contains, not starts-with
                     if (items[i].firstName.ToLower().StartsWith(nameFilter.ToLower()) || items[i].lastName.ToLower().StartsWith(nameFilter.ToLower()))
                     {
                         peopleToReturn.Add(items[i]);
@@ -71,6 +74,7 @@ namespace ContactListExercise.Controllers
         public IActionResult AddItem([FromBody] Person newItem)
         {
             //check whether the email-field is null or completely empty
+            // string.IsNullOrEmpty
             if(newItem.email == null || newItem.email.Length <= 0)
             {
                 //return status-code 400 with error-message
